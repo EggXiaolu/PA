@@ -42,3 +42,7 @@ _default:
 	@echo "Please run 'make' under subprojects."
 
 .PHONY: .git_commit .clean_index _default
+
+
+STUID = 123
+STUNAME = EggXiaolu

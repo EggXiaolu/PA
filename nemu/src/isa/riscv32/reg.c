@@ -28,4 +28,14 @@ void isa_reg_display() {
     }
 }
 
-word_t isa_reg_str2val(const char *s, bool *success) { return 0; }
+word_t isa_reg_str2val(const char *s, bool *success) {
+    *success = false;
+    for (int i = 0; i < MUXDEF(CONFIG_RVE, 16, 32); i++) {
+        const char *reg = reg_name(i);
+        if (strcmp(s, reg) == 0) {
+            *success = true;
+            return cpu.gpr[i];
+        }
+    }
+    return 0;
+}

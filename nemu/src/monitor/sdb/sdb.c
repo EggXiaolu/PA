@@ -69,6 +69,7 @@ static int cmd_info(char *args) {
             isa_reg_display();
             break;
         case ('w'):
+            print_wp();
             break;
         default:
             printf("Unknow option '%c'\n", args[0]);
@@ -121,6 +122,30 @@ static int cmd_p(char *args) {
     return 0;
 }
 
+static int cmd_w(char *args) {
+    if (!args) {
+        printf("Usage: w [EXPR]\n");
+        return 1;
+    }
+    if (!set_wp(args)) {
+        printf("Failed to compute expression!\n");
+        return 2;
+    }
+    return 0;
+}
+
+static int cmd_d(char *args) {
+    if (!args) {
+        printf("Usage: d [N]\n");
+        return 1;
+    }
+    if (!delete_wp(atoi(args))) {
+        printf("Wrong number!\n");
+        return 2;
+    }
+    return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -134,7 +159,9 @@ static struct {
     {"si", "Step through code", cmd_si},
     {"info", "print the reg", cmd_info},
     {"x", "Scan the memroy", cmd_x},
-    {"p", "Compute the expression", cmd_p}
+    {"p", "Compute the expression", cmd_p},
+    {"w", "Set the watcher", cmd_w},
+    {"d", "Delete the watcher", cmd_d}
 
     /* TODO: Add more commands */
 

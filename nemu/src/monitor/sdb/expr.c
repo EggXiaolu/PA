@@ -14,6 +14,8 @@
  ***************************************************************************************/
 
 #include <isa.h>
+#include <memory/paddr.h>
+#include <memory/vaddr.h>
 
 /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
@@ -335,7 +337,7 @@ u_int32_t eval(int p, int q) {
         case TK_NEG:
             return -val2;
         case TK_DEREF:
-            return val2;
+            return *guest_to_host(val2);
         case TK_AND:
             return val1 && val2;
         case TK_OR:

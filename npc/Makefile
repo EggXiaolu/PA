@@ -1,4 +1,5 @@
 BUILD_DIR = ./build
+VERILATOR_FLAGS=--cc --exe --build --trace
 
 export PATH := $(PATH):$(abspath ./utils)
 
@@ -27,11 +28,15 @@ checkformat:
 
 clean:
 	-rm -rf $(BUILD_DIR)
+	-rm -rf obj_dir
 
 .PHONY: test verilog help compile bsp reformat checkformat clean
 
 sim:
 	$(call git_commit, "sim RTL") # DO NOT REMOVE THIS LINE!!!
-	@echo "Write this Makefile by yourself."
+	verilator $(VERILATOR_FLAGS) ./csrc/*.cpp ./vsrc/*.v
 
+wave:
+	./obj_dir/Vour
+	gtkwave *.vcd
 -include ../Makefile
